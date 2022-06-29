@@ -48,8 +48,19 @@
                 <br><br>
 
                 <div class="d-grid">
-                    <a href="#generatedTeams" class="btn btn-dark" type="button" > Generate</a>
-                    <!-- <button class="btn btn-dark" type="button">Generate</button> -->
+                    <!-- <a href="#generatedTeams" class="btn btn-dark" type="button" id="generateButton"> Generate</a> -->
+                    <button class="btn btn-dark" type="button" id="generateButton">Generate</button>
+                </div>
+                <br>
+
+                <div class="alert alert-danger text-center" role="alert" style="display: none" id="textareaMessage">
+                    Insert member first!
+                </div>
+                <div class="alert alert-danger text-center" role="alert" role="alert" style="display: none;" id="methodMessage">
+                    Select division method!
+                </div>
+                <div class="alert alert-warning text-center" role="alert" role="alert" style="display: none;" id="dividerMessage">
+                    "How many?" must larger than 0.
                 </div>
             </div>
         </div>
@@ -121,5 +132,7 @@
             </p>
         </footer>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
