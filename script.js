@@ -38,8 +38,8 @@ function isChecked(divider) {
         randomTeam();
     } else if(document.getElementById('memberRadio').checked) {
         perTeam = divider;
-        teamsCount = Math.floor(memberCount / perTeam);
-        mod = memberCount % perTeam;
+        teamsCount = Math.ceil(memberCount / perTeam);
+        mod = 0;
         randomTeam();
     } else {
         emptyMethod();
@@ -66,34 +66,67 @@ function emptyDivider() {
 }
 
 function randomTeam() {
-    let generatedTeam = [];
+    let generatedTeams = [];
     let random = 0;
 
     // create random for best case
     for(let i = 0; i < teamsCount; i++) {
-        generatedTeam.push([]);
+        generatedTeams.push([]);
         for(let j = 0; j < perTeam; j++) {
             random = Math.floor(Math.random() * memberArray.length);
-            generatedTeam[i].push(memberArray[random]);
+            generatedTeams[i].push(memberArray[random]);
             memberArray.splice(random, 1);
         }
     }
 
+    // add remainder members into teams
     if(mod !== 0) {
         let i = 0;
 
         while(i < mod) {
-            random = Math.floor(Math.random() * generatedTeam.length);
-            if(generatedTeam[random].length === perTeam + 1) {
+            random = Math.floor(Math.random() * generatedTeams.length);
+            if(generatedTeams[random].length === perTeam + 1) {
                 continue;
             } else {
-                generatedTeam[random].push(memberArray[0]);
+                generatedTeams[random].push(memberArray[0]);
                 memberArray.splice(0, 1);
                 i++;
             }
         }
     }
 
-    console.log(generatedTeam);
-    console.log(memberArray);
+    // update UI after teams created
+    updateUI(generatedTeams);
+}
+
+function updateUI(generatedTeams)  {
+    const generatedHeader = document.getElementById('generatedTeams');
+    generatedHeader.style.display = "block";
+    
+    let cards = '';
+    generatedTeams.forEach((team, i) => cards += updateCard(i, team))
+    
+    document.querySelector('.cards').innerHTML = cards;
+
+    generatedHeader.scrollIntoView();
+
+}
+
+function updateCard(i, team) {
+    let cardBody = '';
+
+    team.forEach(member => {
+        if(member !== undefined) {
+            cardBody += `<p class="card-text">${member}</p>`;
+        }
+    });
+
+    return `<div class="col-sm-4 col-md-3 col-xs-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-tittle text-center">Team ${i + 1}</h5>
+                        ${cardBody}
+                    </div>
+                </div>
+            </div>`
 }
