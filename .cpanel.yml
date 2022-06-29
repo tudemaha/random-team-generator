@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/tudemaha/public_html/random-team-generator
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp script.js $DEPLOYPATH
